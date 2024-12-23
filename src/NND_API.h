@@ -51,7 +51,7 @@ namespace NND_API
 	/// <returns>The pointer to the API singleton, or nullptr if request failed</returns>
 	[[nodiscard]] inline void* RequestPluginAPI(const InterfaceVersion a_interfaceVersion = InterfaceVersion::kV1)
 	{
-		const auto pluginHandle = GetModuleHandle("NPCsNamesDistributor.dll");
+		const auto pluginHandle = GetModuleHandle(L"NPCsNamesDistributor.dll");
 		if (const _RequestPluginAPI requestAPIFunction = reinterpret_cast<_RequestPluginAPI>(GetProcAddress(pluginHandle, "RequestPluginAPI"))) {
 			return requestAPIFunction(a_interfaceVersion);
 		}
