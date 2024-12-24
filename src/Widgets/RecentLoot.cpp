@@ -108,7 +108,7 @@ namespace Scaleform
 		RE::GFxValue args[4];
 		args[0].SetNumber(Settings::uRecentLootMaxMessageCount);
 		args[1].SetNumber(Settings::fRecentLootMessageDuration);
-		args[2].SetNumber((Settings::bRecentLootUseHUDOpacity ? *g_fHUDOpacity : Settings::fRecentLootOpacity) * 100.f);
+		args[2].SetNumber((Settings::bRecentLootUseHUDOpacity ? GetHUDOpacity() : Settings::fRecentLootOpacity) * 100.f);
 		args[3].SetNumber(static_cast<uint32_t>(Settings::uRecentLootListDirection));
 		_object.Invoke("loadConfig", nullptr, args, 4);
 

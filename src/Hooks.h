@@ -14,11 +14,11 @@ namespace Hooks
 			_ProcessButton = SprintHandlerVtbl.write_vfunc(0x4, ProcessButton);
 
 			REL::Relocation<std::uintptr_t> PlayerCharacterVtbl{ RE::VTABLE_PlayerCharacter[0] };
-			_AddObjectToContainer = PlayerCharacterVtbl.write_vfunc(0x5A, AddObjectToContainer);
-			_PickUpObject = PlayerCharacterVtbl.write_vfunc(0xCC, PickUpObject);
+			//_AddObjectToContainer = PlayerCharacterVtbl.write_vfunc(0x5A, AddObjectToContainer);
+			//_PickUpObject = PlayerCharacterVtbl.write_vfunc(0xCC, PickUpObject);
 
 			auto& trampoline = SKSE::GetTrampoline();
-#
+
 			REL::Relocation<uintptr_t> hook1{ RELOCATION_ID(51907, 52845) };  // 8D53D0, 905A10 // FlashHudMenuMeter
 			REL::Relocation<uintptr_t> hook2{ RELOCATION_ID(50747, 51642) };  // 87FFF0, 8B0220 // SetHUDCartMode
 			REL::Relocation<uintptr_t> hook3{ RELOCATION_ID(50771, 51666) };  // 881CC0, 8B1F40 // HUDChargeMeter::Update
@@ -29,7 +29,7 @@ namespace Hooks
 			REL::Relocation<uintptr_t> hook8{ RELOCATION_ID(50450, 51355) };  // 86C640, 89A9C0 // called by EnchantConstructMenu
 			REL::Relocation<uintptr_t> hook9{ RELOCATION_ID(15887, 16127) };  // 1E9900, 1F5130 // called by AddItem
 
-			_AddMessage_Flash = trampoline.write_call<5>(hook1.address() + 0x83, AddMessage_Flash);                    // 8D5453, 905A93
+			/*_AddMessage_Flash = trampoline.write_call<5>(hook1.address() + 0x83, AddMessage_Flash);                    // 8D5453, 905A93
 			_AddMessage_SetHUDCartMode = trampoline.write_call<5>(hook2.address() + 0xA3, AddMessage_SetHUDCartMode);  // 880093, 8B02C3
 			_Invoke_ChargeMeter1 = trampoline.write_call<5>(hook3.address() + 0x168, Invoke_ChargeMeter1);             // 881E28, 8B20A8
 			_Invoke_ChargeMeter2 = trampoline.write_call<5>(hook3.address() + 0x2B3, Invoke_ChargeMeter2);             // 881F43, 8B21F3
@@ -43,7 +43,7 @@ namespace Hooks
 			_PlayPickupSoundAndMessage_EnchantConstructMenu = trampoline.write_call<5>(hook8.address() + RELOCATION_OFFSET(0x2A5, 0x2A3), PlayPickupSoundAndMessage_EnchantConstructMenu);      // 86C8E5, 89AC63
 			_PlayPickupSoundAndMessage_AddItem = trampoline.write_call<5>(hook9.address() + RELOCATION_OFFSET(0x178, 0x182), PlayPickupSoundAndMessage_AddItem);                                // 1E9A78, 1F52B2
 			
-			FlashHUDStaminaMountHook();
+			FlashHUDStaminaMountHook();*/
 		}
 
 	private:

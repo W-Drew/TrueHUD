@@ -1826,7 +1826,7 @@ namespace Scaleform
 		RE::NiPoint2 screenPos;
 		float depth;
 
-		RE::NiCamera::WorldPtToScreenPt3((float(*)[4])g_worldToCamMatrix, *g_viewPort, a_worldPos, screenPos.x, screenPos.y, depth, 1e-5f);
+		RE::NiCamera::WorldPtToScreenPt3(GetWorldToCameraMatrix(), GetViewport(), a_worldPos, screenPos.x, screenPos.y, depth, 1e-5f);
 		RE::GRectF rect = _view->GetVisibleFrameRect();
 
 		screenPos.x = rect.left + (rect.right - rect.left) * screenPos.x;

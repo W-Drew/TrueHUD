@@ -92,7 +92,7 @@ namespace Scaleform
 		args[11].SetNumber(static_cast<uint32_t>(Settings::uBossBarIndicatorMode));
 		args[12].SetNumber(Settings::fBossBarPhantomDuration);
 		args[13].SetNumber(Settings::fBossBarDamageCounterDuration);
-		args[14].SetNumber((Settings::bBossBarUseHUDOpacity ? *g_fHUDOpacity : Settings::fBossBarOpacity) * 100.f);
+		args[14].SetNumber((Settings::bBossBarUseHUDOpacity ? GetHUDOpacity() : Settings::fBossBarOpacity) * 100.f);
 		args[15].SetNumber(Settings::fBossBarWidth);
 		args[16].SetNumber(Settings::fBossBarResourceWidth);
 		args[17].SetNumber(hudMenu->GetBarColor(_refHandle, RE::ActorValue::kHealth, ColorType::BarColor));

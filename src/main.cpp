@@ -4,6 +4,7 @@
 #include "HUDHandler.h"
 #include "Scaleform/Scaleform.h"
 #include "NPCNameProvider.h"
+#include <spdlog/sinks/basic_file_sink.h>
 
 void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
 {
@@ -37,9 +38,6 @@ namespace
 {
 	void InitializeLog()
 	{
-#ifndef NDEBUG
-		auto sink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-#else
 		auto path = logger::log_directory();
 		if (!path) {
 			util::report_and_fail("Failed to find standard logging directory"sv);
@@ -47,7 +45,6 @@ namespace
 
 		*path /= fmt::format("{}.log"sv, Plugin::NAME);
 		auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
-#endif
 
 #ifndef NDEBUG
 		const auto level = spdlog::level::trace;
@@ -70,41 +67,29 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 	a_info->name = Plugin::NAME.data();
 	a_info->version = Plugin::VERSION[0];
 
-	if (a_skse->IsEditor()) {
+	/*if (a_skse->IsEditor()) {
 		logger::critical("Loaded in editor, marking as incompatible"sv);
 		return false;
-	}
+	}*/
 
-	const auto ver = a_skse->RuntimeVersion();
+	/*const auto ver = a_skse->RuntimeVersion();
 	if (ver < SKSE::RUNTIME_SSE_1_5_39) {
 		logger::critical(FMT_STRING("Unsupported runtime version {}"), ver.string());
 		return false;
-	}
+	}*/
 
 	return true;
 }
 
-extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
-	SKSE::PluginVersionData v;
-
-	v.PluginVersion(Plugin::VERSION);
-	v.PluginName(Plugin::NAME);
-	v.AuthorName("Ersh");
-	v.UsesAddressLibrary(true);
-	v.CompatibleVersions({ SKSE::RUNTIME_SSE_LATEST });
-	v.HasNoStructUse(true);
-
-	return v;
-}();
-
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
-#ifndef NDEBUG
+/*#ifndef NDEBUG
 	while (!IsDebuggerPresent()) { Sleep(100); }
-#endif
+#endif*/
 	
 	InitializeLog();
 	logger::info("{} v{}"sv, Plugin::NAME, Plugin::VERSION.string());
+	spdlog::flush_on(spdlog::level::info);
 
 	SKSE::Init(a_skse);
 	SKSE::AllocTrampoline(1 << 8);

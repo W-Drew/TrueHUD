@@ -65,14 +65,14 @@ namespace Scaleform
 	void ShoutIndicator::LoadConfig()
 	{
 		RE::GFxValue arg;
-		arg.SetNumber((Settings::bBossBarUseHUDOpacity ? *g_fHUDOpacity : Settings::fBossBarOpacity) * 100.f);
+		arg.SetNumber((Settings::bBossBarUseHUDOpacity ? GetHUDOpacity() : Settings::fBossBarOpacity) * 100.f);
 		_object.Invoke("loadConfig", nullptr, &arg, 1);
 	}
 
 	float ShoutIndicator::GetPercent()
 	{
 		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
-		auto currentProcess = playerCharacter->GetActorRuntimeData().currentProcess;
+		auto currentProcess = playerCharacter->currentProcess;
 		
 		float voiceRecoveryTime = 0.f;
 		float cooldown = _cooldown;
@@ -95,7 +95,7 @@ namespace Scaleform
 			return 100.f;
 		}
 
-		float endDuration = *g_fShoutMeterEndDuration;
+		float endDuration = GetShoutMeterEndDuration();
 
 		if (voiceRecoveryTime <= endDuration) {
 			return 80.f - ((voiceRecoveryTime - endDuration) / endDuration) * 20.f;

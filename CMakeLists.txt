@@ -22,10 +22,8 @@ if(NOT DEFINED CompiledPluginsPath)
 	message(FATAL_ERROR "CompiledPluginsPath is not set")
 endif()
 
-option(COPY_OUTPUT "Copy the output of build operations to the game directory" ON)
-option(ENABLE_SKYRIM_SE "Enable support for Skyrim SE in the dynamic runtime feature." ON)
-option(ENABLE_SKYRIM_AE "Enable support for Skyrim AE in the dynamic runtime feature." ON)
-option(ENABLE_SKYRIM_VR "Enable support for Skyrim VR in the dynamic runtime feature." OFF)
+set(BUILD_SKYRIMVR ON)
+add_compile_definitions(SKYRIMVR)
 set(BUILD_TESTS OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")

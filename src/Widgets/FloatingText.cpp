@@ -52,7 +52,7 @@ namespace Scaleform
 
 			RE::GRectF rect = _view->GetVisibleFrameRect();
 
-			RE::NiCamera::WorldPtToScreenPt3((float(*)[4])g_worldToCamMatrix, *g_viewPort, _worldPosition, _screenPosition.x, _screenPosition.y, _depth, 1e-5f);
+			RE::NiCamera::WorldPtToScreenPt3(GetWorldToCameraMatrix(), GetViewport(), _worldPosition, _screenPosition.x, _screenPosition.y, _depth, 1e-5f);
 
 			bool bIsOffscreen = _depth < 0;
 
@@ -60,8 +60,8 @@ namespace Scaleform
 			visible.SetBoolean(!bIsOffscreen);
 			_object.SetMember("_visible", &bIsOffscreen);
 
-			float fNear = *g_fNear;
-			float fFar = *g_fFar;
+			float fNear = GetNearClipDistance();
+			float fFar = GetFarClipDistance();
 			float linearizedDepth = fNear * fFar / (fFar + _depth * (fNear - fFar));
 
 			_screenPosition.y = 1.0f - _screenPosition.y;  // Flip y for Flash coordinate system

@@ -107,14 +107,14 @@ target_include_directories(
 )
 
 set(SKSE_SUPPORT_XBYAK ON)
-add_subdirectory("$ENV{CommonLibSSEPath_NG}" CommonLibSSE EXCLUDE_FROM_ALL)
+add_subdirectory("C:/Git/CommonLibVR" CommonLibVR EXCLUDE_FROM_ALL)
 
 find_package(xbyak REQUIRED CONFIG)
 
 target_link_libraries(
 	"${PROJECT_NAME}"
 	PRIVATE
-		CommonLibSSE::CommonLibSSE
+		CommonLibVR::CommonLibVR
 		xbyak::xbyak
 )
 

@@ -192,6 +192,11 @@ namespace Scaleform
 		TrueHUDMenu()
 		{
 			auto menu = static_cast<Super*>(this);
+
+			// menuName doesn't get set properly through the Register+Creator specifically on VR, so we need
+			// to set it manually or else we will get a double delete on the default BSFixedString name
+			menu->menuName = MENU_NAME;
+
 			menu->depthPriority = SortPriority();
 			auto scaleformManager = RE::BSScaleformManager::GetSingleton();
 

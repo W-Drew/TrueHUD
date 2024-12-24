@@ -239,7 +239,7 @@ HUDHandler::EventResult HUDHandler::ProcessEvent(const RE::MenuOpenCloseEvent* a
 	if (const auto controlMap = RE::ControlMap::GetSingleton()) {
 		const auto& priorityStack = controlMap->contextPriorityStack;
 		if (priorityStack.empty()) {
-			HUDHandler::GetSingleton()->SetMenuVisibilityMode(MenuVisibilityMode::kHidden);
+			HUDHandler::GetSingleton()->SetMenuVisibilityMode(MenuVisibilityMode::kVisible);
 		} else if (priorityStack.back() == ContextID::kGameplay ||
 				   priorityStack.back() == ContextID::kFavorites ||
 				   priorityStack.back() == ContextID::kConsole) {
@@ -254,9 +254,9 @@ HUDHandler::EventResult HUDHandler::ProcessEvent(const RE::MenuOpenCloseEvent* a
 																		 RE::UI::GetSingleton()->IsMenuOpen(RE::ContainerMenu::MENU_NAME) ||
 																		 RE::UI::GetSingleton()->IsMenuOpen(RE::GiftMenu::MENU_NAME) ||
 																		 RE::UI::GetSingleton()->IsMenuOpen(RE::InventoryMenu::MENU_NAME)))) {
-			HUDHandler::GetSingleton()->SetMenuVisibilityMode(MenuVisibilityMode::kPartial);
+			HUDHandler::GetSingleton()->SetMenuVisibilityMode(MenuVisibilityMode::kVisible);
 		} else {
-			HUDHandler::GetSingleton()->SetMenuVisibilityMode(MenuVisibilityMode::kHidden);
+			HUDHandler::GetSingleton()->SetMenuVisibilityMode(MenuVisibilityMode::kVisible);
 		}
 	}
 
@@ -704,7 +704,7 @@ bool HUDHandler::CheckActorForBoss(RE::ObjectRefHandle a_refHandle)
 	auto actor = a_refHandle.get()->As<RE::Actor>();
 	if (actor && playerCharacter && (actor != playerCharacter)) {
 		// Check whether the target is even alive or hostile first
-		if (actor->IsDead() || (actor->AsActorState()->IsBleedingOut() && actor->IsEssential()) || !actor->IsHostileToActor(playerCharacter)) {
+		if (actor->IsDead() || (actor->IsBleedingOut() && actor->IsEssential()) || !actor->IsHostileToActor(playerCharacter)) {
 			return false;
 		}
 
@@ -732,13 +732,14 @@ bool HUDHandler::CheckActorForBoss(RE::ObjectRefHandle a_refHandle)
 		}
 
 		// Check current loc refs
-		if (auto currentLocation = playerCharacter->GetPlayerRuntimeData().currentLocation) {
+		// TODO currentLocation not REd for VR
+		/*if (auto currentLocation = playerCharacter->GetPlayerRuntimeData().currentLocation) {
 			for (auto& ref : currentLocation->specialRefs) {
 				if (ref.type && Settings::bossLocRefTypes.contains(ref.type) && ref.refData.refID == actor->formID) {
 					return true;
 				}
 			}
-		}
+		}*/
 	}
 
 	return false;

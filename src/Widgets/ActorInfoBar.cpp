@@ -47,7 +47,7 @@ namespace Scaleform
 		targetPos.z += Settings::fInfoBarOffsetZ;
 		RE::NiPoint2 screenPos;
 
-		RE::NiCamera::WorldPtToScreenPt3((float(*)[4])g_worldToCamMatrix, *g_viewPort, targetPos, screenPos.x, screenPos.y, _depth, 1e-5f);
+		RE::NiCamera::WorldPtToScreenPt3(GetWorldToCameraMatrix(), GetViewport(), targetPos, screenPos.x, screenPos.y, _depth, 1e-5f);
 
 		_bIsOffscreen = _depth < 0;
 
@@ -59,8 +59,8 @@ namespace Scaleform
 			}
 		}
 
-		float fNear = *g_fNear;
-		float fFar = *g_fFar;
+		float fNear = GetNearClipDistance();
+		float fFar = GetFarClipDistance();
 		float linearizedDepth = fNear * fFar / (fFar + _depth * (fNear - fFar));
 
 		screenPos.y = 1.0f - screenPos.y;  // Flip y for Flash coordinate system
@@ -112,7 +112,7 @@ namespace Scaleform
 		args[16].SetNumber(static_cast<uint32_t>(Settings::uInfoBarIndicatorMode));	
 		args[17].SetNumber(Settings::fInfoBarPhantomDuration);
 		args[18].SetNumber(Settings::fInfoBarDamageCounterDuration);
-		args[19].SetNumber((Settings::bInfoBarUseHUDOpacity ? *g_fHUDOpacity : Settings::fInfoBarOpacity) * 100.f);
+		args[19].SetNumber((Settings::bInfoBarUseHUDOpacity ? GetHUDOpacity() : Settings::fInfoBarOpacity) * 100.f);
 		args[20].SetNumber(Settings::fInfoBarWidth);
 		args[21].SetNumber(Settings::fInfoBarResourceWidth);
 		args[22].SetNumber(Settings::fInfoBarTargetWidth);
